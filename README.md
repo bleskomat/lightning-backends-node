@@ -1,6 +1,6 @@
 # lightning-backends
 
-![Build Status](https://github.com/bleskomat/lightning-backends/actions/workflows/tests.yml/badge.svg)
+![Build Status](https://github.com/bleskomat/lightning-backends-node/actions/workflows/tests.yml/badge.svg)
 
 Node.js module to integrate with various Lightning Network node software and service providers.
 
