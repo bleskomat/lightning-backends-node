@@ -22,7 +22,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/samotari/lightning-backends-node.git"
+    "url": "git+https://github.com/bleskomat/lightning-backends-node.git"
   },
   "author": {
     "name": "Charles Hill",
@@ -36,9 +36,9 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/samotari/lightning-backends-node/issues"
+    "url": "https://github.com/bleskomat/lightning-backends-node/issues"
   },
-  "homepage": "https://github.com/samotari/lightning-backends-node#readme",
+  "homepage": "https://github.com/bleskomat/lightning-backends-node#readme",
   "dependencies": {
     "@bleskomat/form": "1.2.5",
     "async": "3.2.3",

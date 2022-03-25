@@ -1,6 +1,6 @@
 # lightning-backends
 
-![Build Status](https://github.com/samotari/lightning-backends/actions/workflows/tests.yml/badge.svg)
+![Build Status](https://github.com/bleskomat/lightning-backends/actions/workflows/tests.yml/badge.svg)
 
 Node.js module to integrate with various Lightning Network node software and service providers.
 
@@ -204,7 +204,7 @@ npm test
 
 ## Changelog
 
-See [CHANGELOG.md](https://github.com/samotari/lightning-backends-node/blob/master/CHANGELOG.md)
+See [CHANGELOG.md](https://github.com/bleskomat/lightning-backends-node/blob/master/CHANGELOG.md)
 
 
 ## License
