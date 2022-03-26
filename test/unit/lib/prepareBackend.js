@@ -33,4 +33,12 @@ describe('prepareBackend(backend[, config])', function() {
 		assert.ok(ln instanceof DummyLightningBackend);
 		assert.strictEqual(ln.name, 'dummy');
 	});
+
+	it('backend as { path: \'/full/path/to/backend.js\' }', function() {
+		const filePath = path.resolve(path.join(__dirname, '..', '..', '..', 'lib', 'backends', 'dummy.js'));
+		const ln = prepareBackend({ path: filePath });
+		assert.ok(ln instanceof LightningBackend);
+		assert.ok(ln instanceof DummyLightningBackend);
+		assert.strictEqual(ln.name, 'dummy');
+	});
 });
