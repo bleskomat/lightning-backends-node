@@ -140,8 +140,10 @@ const { LightningBackend } = require('lightning-backends/lib');
 
 class Backend extends LightningBackend {
 
+	static name = 'custom';
+
 	constructor(options) {
-		super('custom', options, {
+		super(Backend.name, options, {
 			defaultOptions: {
 				nodeUri: null,
 			},

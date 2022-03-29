@@ -1,54 +1,38 @@
 const assert = require('assert');
 const bolt11 = require('bolt11');
 const crypto = require('crypto');
-const { checkBackend, getTagDataFromPaymentRequest } = require('../../../../lib');
-const fs = require('fs');
-const path = require('path');
-
-const backends = (function() {
-	const dirPath = path.join(__dirname, '..', '..', '..', '..', 'lib', 'backends');
-	const files = fs.readdirSync(dirPath);
-	let nameToFilePath = {};
-	files.forEach(file => {
-		const name = path.basename(file, '.js');
-		const filePath = path.join(dirPath, file);
-		if (name !=='dummy') {
-			nameToFilePath[name] = filePath;
-		}
-	});
-	return nameToFilePath;
-})();
+const { checkBackend, getBackends, getTagDataFromPaymentRequest } = require('../../../../lib');
 
 describe('backends', function() {
 
-	Object.entries(backends).forEach(([backend, filePath], index) => {
+	getBackends().forEach(Backend => {
 
-		const BACKEND = backend.toUpperCase();
+		const { name } = Backend;
+		const NAME = name.toUpperCase();
 
-		describe(backend, function() {
+		describe(name, function() {
 
 			let ln, config;
 			let tests = {};
 			before(function() {
 				// Must be one level above other hooks/tests, to skip all hooks and tests in this suite.
-				if (typeof process.env[`TEST_${BACKEND}_CONFIG`] === 'undefined') {
+				if (typeof process.env[`TEST_${NAME}_CONFIG`] === 'undefined') {
 					return this.skip();
 				}
-				const LightningBackend = require(filePath);
-				config = JSON.parse(process.env[`TEST_${BACKEND}_CONFIG`]);
-				ln = new LightningBackend(config);
-				tests.getNodeUri = JSON.parse(process.env[`TEST_${BACKEND}_GETNODEURI`] || '{"skip":true}');
-				tests.openChannel = JSON.parse(process.env[`TEST_${BACKEND}_OPENCHANNEL`] || '{"skip":true}');
-				tests.payInvoice = JSON.parse(process.env[`TEST_${BACKEND}_PAYINVOICE`] || '{"skip":true}');
-				tests.addInvoice = JSON.parse(process.env[`TEST_${BACKEND}_ADDINVOICE`] || '{"skip":true}');
-				tests.getInvoiceStatus = JSON.parse(process.env[`TEST_${BACKEND}_GETINVOICESTATUS`] || '{"skip":true}');
+				config = JSON.parse(process.env[`TEST_${NAME}_CONFIG`]);
+				ln = new Backend(config);
+				tests.getNodeUri = JSON.parse(process.env[`TEST_${NAME}_GETNODEURI`] || '{"skip":true}');
+				tests.openChannel = JSON.parse(process.env[`TEST_${NAME}_OPENCHANNEL`] || '{"skip":true}');
+				tests.payInvoice = JSON.parse(process.env[`TEST_${NAME}_PAYINVOICE`] || '{"skip":true}');
+				tests.addInvoice = JSON.parse(process.env[`TEST_${NAME}_ADDINVOICE`] || '{"skip":true}');
+				tests.getInvoiceStatus = JSON.parse(process.env[`TEST_${NAME}_GETINVOICESTATUS`] || '{"skip":true}');
 			});
 
 			describe('checkBackend', function() {
 
 				it('payInvoice', function() {
 					this.timeout(30000);
-					return checkBackend(backend, config, { method: 'payInvoice' });
+					return checkBackend(name, config, { method: 'payInvoice' });
 				});
 			});
 
