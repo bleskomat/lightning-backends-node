@@ -7,6 +7,10 @@ jobs:
       matrix:
         node: [14]
     steps:
+      - name: Setup TOR
+        uses: tor-actions/setup-tor@main
+        with:
+          daemon: true
       - name: "Checkout ${{ github.ref }} ( ${{ github.sha }} )"
         uses: actions/checkout@v2
       - name: Setup node
