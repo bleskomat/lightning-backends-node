@@ -50,7 +50,7 @@ const config = {
 const ln = prepareBackend(backend, config);
 
 // Pay a Lightning invoice.
-ln.payInvoice(invoice).then(() => {
+ln.payInvoice(invoice).then(result => {
 	// `{ id: null }`
 	// `{ id: 'custom-unique-identifier' }`
 	console.log('payInvoice OK', { result });
@@ -59,7 +59,7 @@ ln.payInvoice(invoice).then(() => {
 });
 
 // Request a new Lightning invoice from the backend.
-ln.addInvoice(21000/* msat */).then(() => {
+ln.addInvoice(21000/* msat */).then(result => {
 	// `{ id: null, invoice: <bolt11-invoice> }`
 	// `{ id: 'custom-unique-identifier', invoice: <bolt11-invoice> }`
 	console.log('addInvoice OK', { result });
@@ -70,7 +70,7 @@ ln.addInvoice(21000/* msat */).then(() => {
 // Get the current status of an invoice by its payment hash or unique identifier.
 // Some backends require the use of a unique identifier instead of payment hash.
 // If the `addInvoice` method returns an `id` then use tha instead of the payment hash here.
-ln.getInvoiceStatus(paymentHash).then(() => {
+ln.getInvoiceStatus(paymentHash).then(result => {
 	// `{ preimage: null, settled: false }`
 	// `{ preimage: '23b1a130cdc61f869674fdc4a64e8de5da1d4666', settled: true }`
 	console.log('getInvoiceStatus OK', { result });
@@ -80,7 +80,7 @@ ln.getInvoiceStatus(paymentHash).then(() => {
 
 // Open a new channel.
 // Most backends do not support this method.
-ln.openChannel(remoteId, localAmt, pushAmt, makePrivate).then(() => {
+ln.openChannel(remoteId, localAmt, pushAmt, makePrivate).then(result => {
 	// `result` can vary depending upon the backend used.
 	console.log('openChannel OK', { result });
 }).catch(error => {
@@ -100,33 +100,47 @@ checkBackend(backend, config, { method: 'payInvoice' }).then(result => {
 ### Backend Configuration Options
 
 Lightning Network Daemon (lnd):
-* __hostname__ - `String` - e.g. `'127.0.0.1:8080'` - onion addresses are supported
-* __protocol__ - `String` - e.g. `'https'` - Protocol of HTTP request (can be "http" or "https").
-* __baseUrl__ - `String` - e.g. `'https://127.0.0.1:8080/custom/path'` - Can be used instead of the hostname and protocol options above.
-* __cert__ - `String`, `Object`, or `Buffer` - e.g. `'/path/to/lnd/tls.cert'` or `{ data: 'STRING_UTF8_ENCODED' }` or `{ data: Buffer.from('STRING_UTF8_ENCODED', 'utf8') }`
-* __macaroon__ - `String`, `Object`, or `Buffer` - e.g. `'/path/to/lnd/admin.macaroon'` or `{ data: 'STRING_UTF8_ENCODED' }` or `{ data: Buffer.from('STRING_UTF8_ENCODED', 'utf8') }`
-* __torSocksProxy__ - `String` - e.g. `'127.0.0.1:9050'` - If hostname contains an onion address, the backend will try to connect to it using the the TOR socks proxy.
+* __hostname__ - The host and port of the node's REST API. Examples:
+	* `127.0.0.1:8080`
+	* `esdlkvxdkwxz6yqs6rquapg4xxt4pt4guj24k75pdnquo5nau135ugyd.onion`
+* __protocol__ - "http" or "https" - Must be "https" unless an onion address is used.
+* __baseUrl__ - The full URL and path of the node's REST API. Can be used instead of the hostname and protocol options above. Examples:
+	* `https://127.0.0.1:8080/custom/path`
+	* `http://esdlkvxdkwxz6yqs6rquapg4xxt4pt4guj24k75pdnquo5nau135ugyd.onion/custom/path`
+* __cert__ - The TLS certificate of the lnd node. Examples:
+	* `/path/to/lnd/tls.cert` - As a file path.
+	* `{ data: 'STRING_UTF8_ENCODED' }` - As a string.
+	* `{ data: Buffer.from('STRING_UTF8_ENCODED', 'utf8') }` - As a buffer.
+* __macaroon__ - The authentication macaroon to access the lnd node's REST API. Examples:
+	* `/path/to/lnd/admin.macaroon` - As a file path.
+	* `{ data: 'STRING_HEX_ENCODED' }` - As a string.
+	* `{ data: Buffer.from('STRING_HEX_ENCODED', 'hex') }` - As a buffer.
+* __torSocksProxy__ - If hostname contains an onion address, the backend will try to connect to it using the the TOR socks proxy. Default:
+	* `127.0.0.1:9050`
 
 coinos:
-* __baseUrl__ - `String` - e.g. `'https://coinos.io'`
-* __jwt__ - `String` - From your coinos wallet, go to "Settings" -> "Auth keys" to view the "JWT Auth Token".
+* __baseUrl__ - The URL of the CoinOS instance. Example:
+	* `https://coinos.io`
+* __jwt__ - From your coinos wallet, go to "Settings" -> "Auth keys" to view the "JWT Auth Token".
 
 lnbits:
-* __baseUrl__ - `String` - e.g. `'https://legend.lnbits.com'`
-* __adminKey__ - `String` - From an account page, open "API info" to view the "Admin key".
+* __baseUrl__ - The URL of the LNBits instance. Example:
+	* `https://legend.lnbits.com`
+* __adminKey__ - From an account page, open "API info" to view the "Admin key".
 
 lndhub:
-* __secret__ - `String` - e.g. `'lndhub://login:password@baseurl'` - If using BlueWallet, go to wallet then "Export/Backup" to view the secret.
+* __secret__ - If using BlueWallet, go to wallet then "Export/Backup" to view the secret. Example:
+	* `lndhub://login:password@baseurl`
 
 lnpay:
-* __apiKey__ - `String`
-* __walletKey__ - `String`
+* __apiKey__
+* __walletKey__
 
 lntxbot:
-* __adminKey__ - `String` - Open Telegram, open the chat with LNTXBOT, send message to the bot "/api_full".
+* __adminKey__ - Open Telegram, open the chat with LNTXBOT, send message to the bot "/api_full".
 
 opennode:
-* __apiKey__ - `String` - Open Telegram, open the chat with LNTXBOT, send message to the bot "/api_full".
+* __apiKey__
 
 
 
