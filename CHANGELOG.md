@@ -1,5 +1,8 @@
 # Changelog
 
+* v1.1.1:
+	* Added missing form inputs
+	* Fix mutation of check method error messages on backend prototypes
 * v1.1.0:
 	* Form-related helpers and improvements
 * v1.0.2:
