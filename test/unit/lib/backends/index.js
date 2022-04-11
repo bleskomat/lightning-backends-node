@@ -133,6 +133,12 @@ describe('backends', function() {
 						}
 					});
 				});
+
+				it('getBalance()', function() {
+					return ln.getBalance().then(result => {
+						assert.ok(Number.isInteger(result));
+					});
+				});
 			});
 		});
 	});

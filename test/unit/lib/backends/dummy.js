@@ -58,6 +58,12 @@ describe('backends', function() {
 					assert.ok(result.settled);
 				});
 			});
+
+			it('getBalance()', function() {
+				return ln.getBalance().then(result => {
+					assert.strictEqual(result, ln.options.balance);
+				});
+			});
 		});
 
 		describe('options', function() {
@@ -188,6 +194,20 @@ describe('backends', function() {
 					return ln.getInvoiceStatus().then(result => {
 						assert.strictEqual(typeof result, 'object');
 						assert.strictEqual(result.settled, false);
+					});
+				});
+			});
+
+			describe('{ balance: 49999 }', function() {
+
+				let ln;
+				before(function() {
+					ln = new DummyLightningBackend({ balance: 49999 });
+				});
+
+				it('getBalance() returns the balance set in options', function() {
+					return ln.getBalance().then(result => {
+						assert.strictEqual(result, ln.options.balance);
 					});
 				});
 			});
