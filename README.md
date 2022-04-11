@@ -79,6 +79,14 @@ ln.getInvoiceStatus(paymentHash).then(result => {
 	console.error('getInvoiceStatus FAILED:', { error });
 });
 
+// Get current spendable Lightning balance.
+ln.getBalance().then(result => {
+	// `result` will be the balance in millisatoshis.
+	console.log('getBalance OK', { result });
+}).catch(error => {
+	console.error('getBalance FAILED:', { error });
+});
+
 // Open a new channel.
 // Most backends do not support this method.
 ln.openChannel(remoteId, localAmt, pushAmt, makePrivate).then(result => {

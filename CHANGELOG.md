@@ -1,5 +1,7 @@
 # Changelog
 
+* v1.3.0:
+	* Added getBalance method to all LN backends
 * v1.2.0:
 	* Added C-Lightning backend - JSON-RPC over unix sock or HTTP-RPC made available by Sparko plugin
 * v1.1.1:
