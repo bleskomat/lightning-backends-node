@@ -12,7 +12,7 @@ describe('backends', function() {
 
 		describe(name, function() {
 
-			let ln, config;
+			let ln, config, network;
 			let tests = {};
 			before(function() {
 				// Must be one level above other hooks/tests, to skip all hooks and tests in this suite.
@@ -26,13 +26,14 @@ describe('backends', function() {
 				tests.payInvoice = JSON.parse(process.env[`TEST_${NAME}_PAYINVOICE`] || '{"skip":true}');
 				tests.addInvoice = JSON.parse(process.env[`TEST_${NAME}_ADDINVOICE`] || '{"skip":true}');
 				tests.getInvoiceStatus = JSON.parse(process.env[`TEST_${NAME}_GETINVOICESTATUS`] || '{"skip":true}');
+				network = process.env[`TEST_${NAME}_NETWORK`] || 'bitcoin';
 			});
 
 			describe('checkBackend', function() {
 
 				it('payInvoice', function() {
 					this.timeout(30000);
-					return checkBackend(name, config, { method: 'payInvoice' });
+					return checkBackend(name, config, { method: 'payInvoice', network });
 				});
 			});
 
@@ -41,7 +42,7 @@ describe('backends', function() {
 				it('getNodeUri()', function() {
 					if (tests.getNodeUri.skip) return this.skip();
 					return ln.getNodeUri().then(result => {
-						if (typeof tests.getNodeUri.result === 'undefined') {
+						if (typeof tests.getNodeUri.result !== 'undefined') {
 							assert.strictEqual(result, tests.getNodeUri.result);
 						} else {
 							assert.strictEqual(typeof result, 'string');

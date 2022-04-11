@@ -159,9 +159,9 @@ class Backend extends LightningBackend {
 	constructor(options) {
 		super(Backend.name, options, {
 			defaultOptions: {
-				nodeUri: null,
+				customOption1: 'a default value',
 			},
-			requiredOptions: ['nodeUri'],
+			requiredOptions: ['customOption1'],
 		});
 	}
 
@@ -171,7 +171,9 @@ class Backend extends LightningBackend {
 	}
 
 	getNodeUri() {
-		return Promise.resolve(this.options.nodeUri);
+		// Options are available as follows:
+		const { customOption1 } = this.options;
+		return Promise.reject('Not implemented');
 	}
 
 	openChannel(remoteId, localAmt, pushAmt, makePrivate) {
