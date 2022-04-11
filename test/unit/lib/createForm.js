@@ -4,7 +4,7 @@ const Form = require('@bleskomat/form');
 const https = require('https');
 const pem = require('pem')
 
-describe('createForm', function() {
+describe('createForm(formOptions[, options])', function() {
 
 	const exampleCert = '-----BEGIN CERTIFICATE-----\nMIICrzCCAZcCFFDhPp3zDg5GRAjhp6KQ81C2MrnrMA0GCSqGSIb3DQEBCwUAMBQx\nEjAQBgNVBAMMCWxvY2FsaG9zdDAeFw0yMjA0MTExMjQyMjdaFw0yMjA1MTExMjQy\nMjdaMBQxEjAQBgNVBAMMCWxvY2FsaG9zdDCCASIwDQYJKoZIhvcNAQEBBQADggEP\nADCCAQoCggEBAOV4yJ5i4hkWH/R7ODV66LWq9ftQ2UXrc1GNUZZtrAlUzOxaB25T\nwkcnjFMT4WYVlw09oOZL/5+4mvajuhW0oN4LFrnZ87ZMT5SRV58sUAVLZSrd+bMD\nCwZrqOXfl2BxPFg8Ya3S4wT+bqCU+0Z4TvyjLBqyaRBPYvyb2iR5tY7ZNZgRv2Od\nfUk8CGjrRS6SZNOMY8EhaSy2tgqmr7j6nmrTj4Ybbe2LrupwfyHvsCJMfZopUEaA\n1TiwXL7gINx4nW0T9pLR3dy1DrEcXHO0z3Rh+caO2HYvXn2C15CPgWrO0crjrekH\nOyndLo0m8kqR/WC+BsZilFsdXRSzugmQpgkCAwEAATANBgkqhkiG9w0BAQsFAAOC\nAQEAwZcB3whFk28SlIdim2I2CUSWpMwodtDRZEGFE5Kt0NftxS+ZO91a8ZSKelir\njQ77YblnAu5w351N7Cu0X77mJpawoCcx6qjbJBsuyMXA38UOnzcKZwdmni9WJYn5\nPoRszIfCGB4KIHZeuxFjR5Za6FM7gRlqa1PwoytKiQ1Dlt9aDgzKPocFHjCieoh2\n4OL0aXtl2y9LYRDNPFftsMPvd3duROzD+xFOKkTcztG+gSa496VDgzSd3EpASNln\nTVI7izt6KvWGGk2EYLXZ5JVuGxSBaUOHN+Xmod2yqRE6IvgDswZe9zl2OIMTj0Ga\ngvg/oDvZxopLoLKnwZBl7xc1tg==\n-----END CERTIFICATE-----';;
 
@@ -167,6 +167,21 @@ describe('createForm', function() {
 					data[`${backend}[cert]`] = httpsServer.cert;
 					return form.validate(data);
 				});
+			});
+		});
+	});
+
+	describe('exclude', function() {
+
+		it('omits backends in exclude array', function() {
+			const options = {
+				exclude: ['dummy', 'c-lightning'],
+			};
+			const form = createForm({}, options);
+			const backendInput = form.inputs.find(input => input.name === 'backend');
+			options.exclude.forEach(name => {
+				assert.ok(!backendInput.options.find(option => option.key === name));
+				assert.ok(!form.options.groups.find(group => group.name === name));
 			});
 		});
 	});
