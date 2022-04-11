@@ -1,5 +1,7 @@
 # Changelog
 
+* TBD:
+	* Added C-Lightning backend - JSON-RPC over unix sock or HTTP-RPC made available by Sparko plugin
 * v1.1.1:
 	* Added missing form inputs
 	* Fix mutation of check method error messages on backend prototypes

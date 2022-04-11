@@ -18,6 +18,7 @@ Node.js module to integrate with various Lightning Network node software and ser
 
 The following list includes all the Lightning Network node software and service providers which are supported:
 * [Lightning Network Daemon (lnd)](https://github.com/LightningNetwork/lnd)
+* [C-Lightning](https://github.com/ElementsProject/lightning) - JSON-RPC interface over unix sock or HTTP-RPC interface made available by [Sparko plugin](https://github.com/fiatjaf/sparko)
 * [coinos](https://coinos.io/home)
 * [lnbits](https://github.com/lnbits/lnbits-legend)
 * [lndhub](https://github.com/BlueWallet/LndHub)
@@ -117,6 +118,17 @@ Lightning Network Daemon (lnd):
 	* `{ data: Buffer.from('STRING_HEX_ENCODED', 'hex') }` - As a buffer.
 * __torSocksProxy__ - If hostname contains an onion address, the backend will try to connect to it using the the TOR socks proxy. Default:
 	* `127.0.0.1:9050`
+
+C-Lightning (unix sock):
+* __unixSockPath__ - The absolute file path to the unix sock of c-lightning. Example:
+	* `/path/to/unix/sock/.lightning/lightning-rpc`
+
+C-Lightning (Sparko):
+* __baseUrl__ - Full URL and path of the Sparko plugin's HTTP-RPC API. Onion addresses are supported. Examples:
+	* `https://127.0.0.1:9737/rpc`
+	* `http://esdlkvxdkwxz6yqs6rquapg4xxt4pt4guj24k75pdnquo5nau135ugyd.onion/rpc`
+* __cert__ - The TLS certificate used by the Sparko plugin.
+* __accessKey__ - See `--sparko-keys=` in your lightningd config.
 
 coinos:
 * __baseUrl__ - The URL of the CoinOS instance. Example:

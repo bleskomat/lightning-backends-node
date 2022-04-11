@@ -8,7 +8,7 @@ describe('backends', function() {
 	getBackends().forEach(Backend => {
 
 		const { name } = Backend;
-		const NAME = name.toUpperCase();
+		const NAME = name.replace(/-/g, '').toUpperCase();
 
 		describe(name, function() {
 
@@ -33,7 +33,11 @@ describe('backends', function() {
 
 				it('payInvoice', function() {
 					this.timeout(30000);
-					return checkBackend(name, config, { method: 'payInvoice', network });
+					return checkBackend(name, config, { method: 'payInvoice', network }).then(result => {
+						assert.strictEqual(typeof result, 'object');
+						assert.strictEqual(result.ok, true);
+						assert.strictEqual(typeof result.message, 'undefined');
+					});
 				});
 			});
 
