@@ -1,5 +1,8 @@
 # Changelog
 
+* v1.4.0:
+	* Added form.js which does TLS check (lnd, c-lightning-sparko) and toggling visibility of backend form fields
+	* New option for createForm method ("exclude")
 * v1.3.0:
 	* Added getBalance method to all LN backends
 * v1.2.0:
