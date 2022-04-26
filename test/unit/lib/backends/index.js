@@ -26,6 +26,7 @@ describe('backends', function() {
 				tests.payInvoice = JSON.parse(process.env[`TEST_${NAME}_PAYINVOICE`] || '{"skip":true}');
 				tests.addInvoice = JSON.parse(process.env[`TEST_${NAME}_ADDINVOICE`] || '{"skip":true}');
 				tests.getInvoiceStatus = JSON.parse(process.env[`TEST_${NAME}_GETINVOICESTATUS`] || '{"skip":true}');
+				tests.getBalance = JSON.parse(process.env[`TEST_${NAME}_GETBALANCE`] || '{"skip":true}');
 				network = process.env[`TEST_${NAME}_NETWORK`] || 'bitcoin';
 			});
 
@@ -79,6 +80,11 @@ describe('backends', function() {
 					return ln.payInvoice(invoice).then(result => {
 						assert.strictEqual(typeof result, 'object');
 						assert.notStrictEqual(typeof result.id, 'undefined');
+						if (result.preimage) {
+							assert.strictEqual(typeof result.preimage, 'string');
+							const paymentHash = getTagDataFromPaymentRequest(invoice, 'payment_hash');
+							assert.strictEqual(crypto.createHash('sha256').update(Buffer.from(result.preimage, 'hex')).digest('hex'), paymentHash);
+						}
 					});
 				});
 
@@ -135,6 +141,7 @@ describe('backends', function() {
 				});
 
 				it('getBalance()', function() {
+					if (tests.getBalance.skip) return this.skip();
 					return ln.getBalance().then(result => {
 						assert.ok(Number.isInteger(result));
 					});
