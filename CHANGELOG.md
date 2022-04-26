@@ -1,5 +1,8 @@
 # Changelog
 
+* v1.5.0:
+	* All backends: payInvoice method now returns preimage if provided by LN backend
+	* lndhub: more tolerant checks in getInvoiceStatus method
 * v1.4.0:
 	* Added form.js which does TLS check (lnd, c-lightning-sparko) and toggling visibility of backend form fields
 	* New option for createForm method ("exclude")
