@@ -114,6 +114,13 @@ describe('backends', function() {
 					});
 				});
 
+				it('payInvoice returns preimage', function() {
+					const invoice = generatePaymentRequest(1000, { preimage });
+					return ln.payInvoice(invoice).then(result => {
+						assert.strictEqual(result.preimage, preimage);
+					});
+				});
+
 				it('getInvoiceStatus returns { preimage: "KNOWN_PREIMAGE" }', function() {
 					return ln.getInvoiceStatus().then(result => {
 						assert.strictEqual(typeof result, 'object');
