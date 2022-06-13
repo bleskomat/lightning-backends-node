@@ -1,5 +1,9 @@
 # Changelog
 
+* v1.5.1:
+	* addInvoice: If supported, LN backend should set description_hash ("purpose_commit_hash")
+	* Fix lnpay domain
+	* dummy LN backend should return preimage as hex string
 * v1.5.0:
 	* All backends: payInvoice method now returns preimage if provided by LN backend
 	* lndhub: more tolerant checks in getInvoiceStatus method
