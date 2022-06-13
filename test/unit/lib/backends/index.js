@@ -111,7 +111,11 @@ describe('backends', function() {
 							const { tagName, data } = tag;
 							tags[tagName] = data;
 						});
-						assert.strictEqual(tags.purpose_commit_hash, descriptionHash);
+						if (typeof tags.purpose_commit_hash !== 'undefined') {
+							assert.strictEqual(tags.purpose_commit_hash, descriptionHash);
+						} else {
+							console.warn(`WARNING [${name}]: addInvoice() created invoice but missing "purpose_commit_hash"`);
+						}
 					});
 				});
 
