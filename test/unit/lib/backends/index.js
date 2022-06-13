@@ -95,10 +95,8 @@ describe('backends', function() {
 						amount = 50000;// msats
 					}
 					const description = 'test addInvoice';
-					const extra = {
-						description,
-						descriptionHash: crypto.createHash('sha256').update(Buffer.from(description, 'utf8')).digest('hex'),
-					};
+					const descriptionHash = crypto.createHash('sha256').update(Buffer.from(description, 'utf8')).digest('hex');
+					const extra = { description, descriptionHash };
 					return ln.addInvoice(amount, extra).then(result => {
 						assert.strictEqual(typeof result, 'object');
 						assert.notStrictEqual(typeof result.id, 'undefined');
@@ -113,12 +111,7 @@ describe('backends', function() {
 							const { tagName, data } = tag;
 							tags[tagName] = data;
 						});
-						if (typeof tags.description !== 'undefined') {
-							assert.strictEqual(tags.description, description);
-						}
-						if (typeof tags.description_hash !== 'undefined') {
-							assert.strictEqual(tags.description_hash, description_hash);
-						}
+						assert.strictEqual(tags.purpose_commit_hash, descriptionHash);
 					});
 				});
 

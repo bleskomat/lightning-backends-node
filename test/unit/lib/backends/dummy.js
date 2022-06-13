@@ -117,7 +117,7 @@ describe('backends', function() {
 				it('payInvoice returns preimage', function() {
 					const invoice = generatePaymentRequest(1000, { preimage });
 					return ln.payInvoice(invoice).then(result => {
-						assert.strictEqual(result.preimage, preimage);
+						assert.strictEqual(result.preimage, preimage.toString('hex'));
 					});
 				});
 
