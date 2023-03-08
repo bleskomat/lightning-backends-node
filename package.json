@@ -18,7 +18,8 @@
   },
   "scripts": {
     "test": "npm run test:unit",
-    "test:unit": "./node_modules/.bin/mocha --recursive ./test/unit"
+    "test:unit": "./node_modules/.bin/mocha --recursive ./test/unit",
+    "generate:self-signed-cert": "openssl req -x509 -newkey rsa:2048 -sha256 -days 3650 -nodes -keyout test/fixtures/key.pem -out test/fixtures/cert.pem -subj '/CN=localhost' -addext 'subjectAltName=DNS:localhost,DNS:127.0.0.1' ; openssl x509 -noout -text -in test/fixtures/cert.pem"
   },
   "repository": {
     "type": "git",
@@ -48,7 +49,6 @@
   },
   "devDependencies": {
     "dotenv": "16.0.0",
-    "mocha": "9.2.2",
-    "pem": "1.14.6"
+    "mocha": "9.2.2"
   }
 }

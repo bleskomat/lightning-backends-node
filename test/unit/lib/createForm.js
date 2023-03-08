@@ -1,8 +1,9 @@
 const assert = require('assert');
 const { createForm } = require('../../../lib');
 const Form = require('@bleskomat/form');
+const fs = require('fs').promises;
 const https = require('https');
-const pem = require('pem')
+const path = require('path');
 
 describe('createForm(formOptions[, options])', function() {
 
@@ -77,7 +78,7 @@ describe('createForm(formOptions[, options])', function() {
 		[
 			{
 				backend: 'lnd',
-				host: '127.0.0.1',
+				host: 'localhost',
 				port: 18080,
 				sampleFailureResponse: '{"payment_error":"no_route"}',
 				requiredFormData: {
@@ -86,7 +87,7 @@ describe('createForm(formOptions[, options])', function() {
 			},
 			{
 				backend: 'c-lightning-sparko',
-				host: '127.0.0.1',
+				host: 'localhost',
 				port: 19737,
 				sampleFailureResponse: '{"code":-1,"message":"not reachable directly and all routehints were unusable"}',
 				requiredFormData: {
@@ -104,23 +105,17 @@ describe('createForm(formOptions[, options])', function() {
 					form = createForm();
 				});
 
+				let key, cert;
+				before(function() {
+					key = this.fixtures.key;
+					cert = this.fixtures.cert;
+				});
+
 				let httpsServer;
 				before(function(done) {
-					const hostname = `${host}:${port}`;
-					pem.createCertificate({
-						selfSigned: true,
-						days: 30,
-						altNames: [ host ],
-					}, (error, result) => {
-						if (error) return done(error);
-						const key = result.serviceKey;
-						const cert = result.certificate;
-						httpsServer = https.createServer({ key, cert }, (req, res) => {
-							res.end(`\n${sampleFailureResponse}`);
-						}).listen(port, host, () => done());
-						httpsServer.hostname = hostname;
-						httpsServer.cert = cert;
-					});
+					httpsServer = https.createServer({ key, cert }, (req, res) => {
+						res.end(`\n${sampleFailureResponse}`);
+					}).listen(port, host, () => done());
 				});
 
 				after(function(done) {
@@ -130,7 +125,7 @@ describe('createForm(formOptions[, options])', function() {
 
 				it('https required', function() {
 					let data = Object.assign({ backend }, requiredFormData);
-					data[`${backend}[baseUrl]`] = `http://${httpsServer.hostname}`;
+					data[`${backend}[baseUrl]`] = `http://${host}:${port}`;
 					return assert.rejects(() => form.validate(data), {
 						message: 'Except in the case of onion addresses, \"Base URL\" must use the https protocol.',
 					});
@@ -138,7 +133,7 @@ describe('createForm(formOptions[, options])', function() {
 
 				it('cert required when Base URL uses https', function() {
 					let data = Object.assign({ backend }, requiredFormData);
-					data[`${backend}[baseUrl]`] = `https://${httpsServer.hostname}`;
+					data[`${backend}[baseUrl]`] = `https://${host}:${port}`;
 					return assert.rejects(() => form.validate(data), {
 						message: '"TLS Certificate" is required',
 					});
@@ -154,17 +149,17 @@ describe('createForm(formOptions[, options])', function() {
 
 				it('tls connection failure', function() {
 					let data = Object.assign({ backend }, requiredFormData);
-					data[`${backend}[baseUrl]`] = `https://${httpsServer.hostname}`;
+					data[`${backend}[baseUrl]`] = `https://${host}:${port}`;
 					data[`${backend}[cert]`] = exampleCert;
 					return assert.rejects(() => form.validate(data), {
-						message: `Unable to establish secure connection to ${httpsServer.hostname} with the provided TLS certificate`,
+						message: `Unable to establish secure connection to ${host}:${port} with the provided TLS certificate`,
 					});
 				});
 
 				it('tls connection OK', function() {
 					let data = Object.assign({ backend }, requiredFormData);
-					data[`${backend}[baseUrl]`] = `https://${httpsServer.hostname}`;
-					data[`${backend}[cert]`] = httpsServer.cert;
+					data[`${backend}[baseUrl]`] = `https://${host}:${port}`;
+					data[`${backend}[cert]`] = cert;
 					return form.validate(data);
 				});
 			});

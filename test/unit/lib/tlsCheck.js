@@ -1,7 +1,8 @@
 const assert = require('assert');
 const crypto = require('crypto');
+const fs = require('fs').promises;
 const https = require('https');
-const pem = require('pem');
+const path = require('path');
 const { tlsCheck } = require('../../../lib');
 
 describe('tlsCheck(host[, options])', function() {
@@ -11,19 +12,10 @@ describe('tlsCheck(host[, options])', function() {
 		const host = '127.0.0.1';
 		const port = 18080;
 		const hostname = `${host}:${port}`;
-
 		let key, cert;
-		before(function(done) {
-			pem.createCertificate({
-				selfSigned: true,
-				days: 30,
-				altNames: [ host ],
-			}, (error, result) => {
-				if (error) return done(error);
-				key = result.serviceKey;
-				cert = result.certificate;
-				done();
-			});
+		before(function() {
+			key = this.fixtures.key;
+			cert = this.fixtures.cert;
 		});
 
 		let server;
@@ -40,7 +32,7 @@ describe('tlsCheck(host[, options])', function() {
 			return tlsCheck(hostname).then(result => {
 				assert.strictEqual(typeof result, 'object');
 				assert.strictEqual(result.authorized, false);
-				assert.strictEqual(result.pem, cert);
+				assert.strictEqual(result.pem, cert.trim());
 				assert.strictEqual(result.fingerprint, fingerprint(cert, 'sha1'));
 				assert.strictEqual(result.fingerprint256, fingerprint(cert, 'sha256'));
 			});
@@ -49,6 +41,7 @@ describe('tlsCheck(host[, options])', function() {
 });
 
 const fingerprint = function(certificate, algorithm) {
+	certificate = certificate.trim();
 	const hash = crypto.createHash(algorithm);
 	const lines = certificate.split('\n');
 	const der = Buffer.from(lines.slice(1, lines.length - 1).join(''), 'base64');
