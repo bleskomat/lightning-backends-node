@@ -1,5 +1,8 @@
 # Changelog
 
+* TBD:
+	* Removed some LN backends: lntxbot (shutdown by maintainer), coinos, lnpay.
+	* Upgraded dependencies
 * v1.5.1:
 	* addInvoice: If supported, LN backend should set description_hash ("purpose_commit_hash")
 	* Fix lnpay domain

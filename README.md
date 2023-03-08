@@ -19,11 +19,8 @@ Node.js module to integrate with various Lightning Network node software and ser
 The following list includes all the Lightning Network node software and service providers which are supported:
 * [Lightning Network Daemon (lnd)](https://github.com/LightningNetwork/lnd)
 * [C-Lightning](https://github.com/ElementsProject/lightning) - JSON-RPC interface over unix sock or HTTP-RPC interface made available by [Sparko plugin](https://github.com/fiatjaf/sparko)
-* [coinos](https://coinos.io/home)
 * [lnbits](https://github.com/lnbits/lnbits-legend)
-* [lndhub](https://github.com/BlueWallet/LndHub)
-* [lnpay](https://lnpay.co/)
-* [lntxbot](https://github.com/fiatjaf/lntxbot)
+* [lndhub](https://github.com/BlueWallet/LndHub) - BlueWallet, GetAlby
 * [opennode](https://www.opennode.com/)
 
 
@@ -138,11 +135,6 @@ C-Lightning (Sparko):
 * __cert__ - The TLS certificate used by the Sparko plugin.
 * __accessKey__ - See `--sparko-keys=` in your lightningd config.
 
-coinos:
-* __baseUrl__ - The URL of the CoinOS instance. Example:
-	* `https://coinos.io`
-* __jwt__ - From your coinos wallet, go to "Settings" -> "Auth keys" to view the "JWT Auth Token".
-
 lnbits:
 * __baseUrl__ - The URL of the LNBits instance. Example:
 	* `https://legend.lnbits.com`
@@ -151,13 +143,6 @@ lnbits:
 lndhub:
 * __secret__ - If using BlueWallet, go to wallet then "Export/Backup" to view the secret. Example:
 	* `lndhub://login:password@baseurl`
-
-lnpay:
-* __apiKey__
-* __walletKey__
-
-lntxbot:
-* __adminKey__ - Open Telegram, open the chat with LNTXBOT, send message to the bot "/api_full".
 
 opennode:
 * __apiKey__
