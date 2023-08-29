@@ -1,6 +1,8 @@
 # Changelog
 
 * TBD:
+	* Added GetAlby backend (extends from lndhub)
+	* Fixed lnbits backend
 	* Removed some LN backends: lntxbot (shutdown by maintainer), coinos, lnpay.
 	* Upgraded dependencies
 * v1.5.1:

@@ -19,7 +19,9 @@ describe('backends', function() {
 				if (typeof process.env[`TEST_${NAME}_CONFIG`] === 'undefined') {
 					return this.skip();
 				}
-				config = JSON.parse(process.env[`TEST_${NAME}_CONFIG`]);
+				try { config = JSON.parse(process.env[`TEST_${NAME}_CONFIG`]); } catch {
+					throw new Error(`Invalid environment variable ("TEST_${NAME}_CONFIG"): Valid JSON expected`);
+				}
 				ln = new Backend(config);
 				tests.getNodeUri = JSON.parse(process.env[`TEST_${NAME}_GETNODEURI`] || '{"skip":true}');
 				tests.openChannel = JSON.parse(process.env[`TEST_${NAME}_OPENCHANNEL`] || '{"skip":true}');
