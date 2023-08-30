@@ -1,5 +1,11 @@
 # Changelog
 
+* v1.6.1:
+	* Add bad auth error message to LNBits backend
+	* lnd: makePrivate can be 1 or true
+	* Add form label where missing
+	* Change sensitive form field type from text to password
+	* Upgraded dependencies
 * v1.6.0:
 	* Added GetAlby backend (extends from lndhub)
 	* Fixed lnbits backend

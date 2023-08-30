@@ -1,6 +1,6 @@
 {
   "name": "lightning-backends",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "Module to integrate with various Lightning Network node software and service providers",
   "keywords": [
     "bitcoin",
