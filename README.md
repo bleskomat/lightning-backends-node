@@ -18,10 +18,11 @@ Node.js module to integrate with various Lightning Network node software and ser
 
 The following list includes all the Lightning Network node software and service providers which are supported:
 * [Lightning Network Daemon (lnd)](https://github.com/LightningNetwork/lnd)
-* [C-Lightning](https://github.com/ElementsProject/lightning) - JSON-RPC interface over unix sock or HTTP-RPC interface made available by [Sparko plugin](https://github.com/fiatjaf/sparko)
-* [lnbits](https://github.com/lnbits/lnbits-legend)
-* [lndhub](https://github.com/BlueWallet/LndHub) - BlueWallet, GetAlby
-* [opennode](https://www.opennode.com/)
+* [Core Lightning](https://github.com/ElementsProject/lightning) - JSON-RPC interface over unix sock or HTTP-RPC interface made available by [Sparko plugin](https://github.com/fiatjaf/sparko)
+* [LNBits](https://github.com/lnbits/lnbits)
+* [GetAlby](https://github.com/getAlby/lndhub.go)
+* [LndHub](https://github.com/BlueWallet/LndHub) (first implemented by BlueWallet, but now used as a standard interface by other wallets)
+* [OpenNode](https://www.opennode.com/)
 
 
 ## Installation
@@ -124,27 +125,31 @@ Lightning Network Daemon (lnd):
 * __torSocksProxy__ - If hostname contains an onion address, the backend will try to connect to it using the the TOR socks proxy. Default:
 	* `127.0.0.1:9050`
 
-C-Lightning (unix sock):
+Core Lightning (unix sock):
 * __unixSockPath__ - The absolute file path to the unix sock of c-lightning. Example:
 	* `/path/to/unix/sock/.lightning/lightning-rpc`
 
-C-Lightning (Sparko):
+Core Lightning (Sparko):
 * __baseUrl__ - Full URL and path of the Sparko plugin's HTTP-RPC API. Onion addresses are supported. Examples:
 	* `https://127.0.0.1:9737/rpc`
 	* `http://esdlkvxdkwxz6yqs6rquapg4xxt4pt4guj24k75pdnquo5nau135ugyd.onion/rpc`
 * __cert__ - The TLS certificate used by the Sparko plugin.
 * __accessKey__ - See `--sparko-keys=` in your lightningd config.
 
-lnbits:
+LNBits:
 * __baseUrl__ - The URL of the LNBits instance. Example:
 	* `https://legend.lnbits.com`
 * __adminKey__ - From an account page, open "API info" to view the "Admin key".
 
-lndhub:
+GetAlby:
+* __secret__ - Go to the GetAlby website, login to your account (link in top-right corner), then go to "Wallet" page (top-center), then scroll down until you see "Show your connection credentials". Click that button to reveal your lndhub secret. Copy and paste it here.
+	* `lndhub://login:password@https://ln.getalby.com`
+
+LndHub:
 * __secret__ - If using BlueWallet, go to wallet then "Export/Backup" to view the secret. Example:
 	* `lndhub://login:password@baseurl`
 
-opennode:
+OpenNode:
 * __apiKey__
 
 
