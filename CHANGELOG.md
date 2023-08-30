@@ -1,5 +1,8 @@
 # Changelog
 
+* v1.6.2:
+	* Downgraded socks-proxy-agent due to incompatibility with older nodejs
+	* Use latest @bleskomat/form with downgraded express-handlebars - this fixes incompatibility with nodejs <16
 * v1.6.1:
 	* Add bad auth error message to LNBits backend
 	* lnd: makePrivate can be 1 or true
