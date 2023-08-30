@@ -42,6 +42,23 @@ describe('backends', function() {
 						assert.strictEqual(typeof result.message, 'undefined');
 					});
 				});
+
+				it('bad config', function() {
+					if (!process.env[`TEST_${NAME}_BAD_CONFIG`]) {
+						return this.skip();
+					}
+					let badConfig;
+					try { badConfig = JSON.parse(process.env[`TEST_${NAME}_BAD_CONFIG`]); } catch {
+						throw new Error(`Invalid environment variable ("TEST_${NAME}_BAD_CONFIG"): Valid JSON expected`);
+					}
+					this.timeout(30000);
+					return checkBackend(name, badConfig, { method: 'payInvoice', network }).then(result => {
+						assert.strictEqual(typeof result, 'object');
+						assert.strictEqual(result.ok, false);
+						assert.strictEqual(typeof result.message, 'string');
+						assert.ok(result.message);
+					});
+				});
 			});
 
 			describe('methods', function() {
