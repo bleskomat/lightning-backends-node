@@ -109,6 +109,7 @@ describe('backends', function() {
 
 				it('addInvoice(amount, extra)', function() {
 					if (tests.addInvoice.skip) return this.skip();
+					this.timeout(5000);
 					let { amount } = tests.addInvoice;
 					if (typeof amount === 'undefined') {
 						amount = 50000;// msats

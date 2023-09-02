@@ -21,7 +21,7 @@ The following list includes all the Lightning Network node software and service 
 * [Core Lightning](https://github.com/ElementsProject/lightning) - JSON-RPC interface over unix sock or HTTP-RPC interface made available by [Sparko plugin](https://github.com/fiatjaf/sparko)
 * [LNBits](https://github.com/lnbits/lnbits)
 * [GetAlby](https://github.com/getAlby/lndhub.go)
-* [LndHub](https://github.com/BlueWallet/LndHub) (first implemented by BlueWallet, but now used as a standard interface by other wallets)
+* [LndHub](https://github.com/BlueWallet/LndHub) - first implemented by BlueWallet, but now used as a standard interface by other wallets and services
 * [OpenNode](https://www.opennode.com/)
 
 
@@ -126,7 +126,7 @@ Lightning Network Daemon (lnd):
 	* `127.0.0.1:9050`
 
 Core Lightning (unix sock):
-* __unixSockPath__ - The absolute file path to the unix sock of c-lightning. Example:
+* __unixSockPath__ - The absolute file path to the unix sock of core lightning. Example:
 	* `/path/to/unix/sock/.lightning/lightning-rpc`
 
 Core Lightning (Sparko):
@@ -146,8 +146,8 @@ GetAlby:
 	* `lndhub://login:password@https://ln.getalby.com`
 
 LndHub:
-* __secret__ - If using BlueWallet, go to wallet then "Export/Backup" to view the secret. Example:
-	* `lndhub://login:password@baseurl`
+* __secret__ - If using LNBits: Go to Extensions to enable the LndHub extension; then open the LndHub extension page and copy the LndHub Admin URL. Example:
+	* `lndhub://admin:xxx@https://your-lnbits-instance/lndhub/ext/`
 
 OpenNode:
 * __apiKey__
