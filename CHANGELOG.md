@@ -1,5 +1,7 @@
 # Changelog
 
+* v1.6.3:
+	* Fix LNBits backend - "payment_secret" now required when paying invoices
 * v1.6.2:
 	* Downgraded socks-proxy-agent due to incompatibility with older nodejs
 	* Use latest @bleskomat/form with downgraded express-handlebars - this fixes incompatibility with nodejs <16
