@@ -1,5 +1,10 @@
 name: tests
-on: [push, pull_request]
+on: 
+  push:
+  pull_request:
+  schedule:
+    # Run once every 3 days:
+    - cron: '0 21 */3 * *'
 jobs:
   all:
     runs-on: ubuntu-latest
