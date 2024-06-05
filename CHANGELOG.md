@@ -1,5 +1,8 @@
 # Changelog
 
+* v1.6.4:
+	* Fix GetAlby backend - latest LndHub credentials use new URL with different error on failed payment
+	* Upgrade dependencies
 * v1.6.3:
 	* Fix LNBits backend - "payment_secret" now required when paying invoices
 * v1.6.2:
