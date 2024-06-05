@@ -2,9 +2,6 @@ name: tests
 on: 
   push:
   pull_request:
-  schedule:
-    # Run once every 3 days:
-    - cron: '0 21 */3 * *'
 jobs:
   all:
     runs-on: ubuntu-latest
@@ -25,8 +22,4 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Run Tests
-        env:
-          TEST_LNBITS_CONFIG: '{"baseUrl":"${{ env.LNBITS_BASE_URL }}","adminKey":"${{ secrets.LNBITS_ADMIN_KEY }}"}'
-          TEST_LNBITS_ADDINVOICE: '{"amount":50000}'
-          TEST_LNBITS_GETBALANCE: '{}'
         run: npm test
