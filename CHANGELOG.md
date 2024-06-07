@@ -1,5 +1,7 @@
 # Changelog
 
+* v1.6.5:
+	* Fix (again) GetAlby backend
 * v1.6.4:
 	* Fix GetAlby backend - latest LndHub credentials use new URL with different error on failed payment
 	* Upgrade dependencies
