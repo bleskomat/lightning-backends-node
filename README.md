@@ -229,6 +229,16 @@ Run automated tests as follows:
 npm test
 ```
 
+To run only end-to-end tests:
+```sh
+npm run test:e2e
+```
+Configurations for each backend are loaded from environment variables from the ".env" file. Create one by copying the example file:
+```sh
+cp test/e2e/example.env test/e2e/.env
+```
+Tests are skipped for backends whose configurations are missing (or commented-out).
+
 
 ## Changelog
 

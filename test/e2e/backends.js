@@ -1,7 +1,7 @@
 const assert = require('assert');
 const bolt11 = require('bolt11');
 const crypto = require('crypto');
-const { checkBackend, getBackends, getTagDataFromPaymentRequest } = require('../../../../lib');
+const { checkBackend, getBackends, getTagDataFromPaymentRequest } = require('../../lib');
 
 describe('backends', function() {
 
