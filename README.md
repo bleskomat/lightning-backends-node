@@ -20,6 +20,7 @@ The following list includes all the Lightning Network node software and service 
 * [Lightning Network Daemon (lnd)](https://github.com/LightningNetwork/lnd)
 * [Core Lightning](https://github.com/ElementsProject/lightning) - JSON-RPC interface over unix sock or HTTP-RPC interface made available by [Sparko plugin](https://github.com/fiatjaf/sparko)
 * [LNBits](https://github.com/lnbits/lnbits)
+* [Blink](https://dev.blink.sv/)
 * [GetAlby](https://github.com/getAlby/lndhub.go)
 * [LndHub](https://github.com/BlueWallet/LndHub) - first implemented by BlueWallet, but now used as a standard interface by other wallets and services
 * [OpenNode](https://www.opennode.com/)
@@ -135,6 +136,10 @@ Core Lightning (Sparko):
 	* `http://esdlkvxdkwxz6yqs6rquapg4xxt4pt4guj24k75pdnquo5nau135ugyd.onion/rpc`
 * __cert__ - The TLS certificate used by the Sparko plugin.
 * __accessKey__ - See `--sparko-keys=` in your lightningd config.
+
+Blink:
+* __connectionString__ - Contains the server URL, account API key, and wallet ID. Example:
+	* `type=blink;server=https://api.blink.sv/graphql;api-key=blink_XXX;wallet-id=xxx-yyyy-zzzz-0000-xyz123`
 
 LNBits:
 * __baseUrl__ - The URL of the LNBits instance. Example:

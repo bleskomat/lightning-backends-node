@@ -1,5 +1,7 @@
 # Changelog
 
+* TBD:
+	* Added Blink backend
 * v1.6.5:
 	* Fix (again) GetAlby backend
 * v1.6.4:
