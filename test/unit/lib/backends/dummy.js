@@ -96,7 +96,7 @@ describe('backends', function() {
 				});
 			});
 
-			describe('{ preimage: "KNOWN_PREIMAGE" }', function() {
+			describe('{ preimage: <KNOWN PREIMAGE> }', function() {
 
 				let preimage;
 				let ln;
@@ -121,7 +121,7 @@ describe('backends', function() {
 					});
 				});
 
-				it('getInvoiceStatus returns { preimage: "KNOWN_PREIMAGE" }', function() {
+				it('getInvoiceStatus returns { preimage: <KNOWN PREIMAGE> }', function() {
 					return ln.getInvoiceStatus().then(result => {
 						assert.strictEqual(typeof result, 'object');
 						assert.strictEqual(result.preimage, preimage.toString('hex'));
