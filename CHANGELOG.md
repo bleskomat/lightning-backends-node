@@ -1,7 +1,9 @@
 # Changelog
 
-* TBD:
+* v1.7.0:
 	* Added Blink backend
+	* Upgrade dependencies
+	* LNBits: insufficient balance ok error when checking if credentials work
 * v1.6.5:
 	* Fix (again) GetAlby backend
 * v1.6.4:
